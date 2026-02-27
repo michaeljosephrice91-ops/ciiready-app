@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Analytics } from '@vercel/analytics/react'
 import CIIReady from './CIIReady'
 
 function App() {
@@ -45,11 +46,17 @@ function App() {
             }}
           >Get access →</a>
         </div>
+        <Analytics />
       </div>
     )
   }
 
-  return <CIIReady />
+  return (
+    <>
+      <CIIReady />
+      <Analytics />
+    </>
+  )
 }
 
 export default App
