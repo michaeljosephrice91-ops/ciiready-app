@@ -281,12 +281,10 @@ const QUESTIONS = [
 
 // ─── CONSTANTS ────────────────────────────────────────────────────────────────
 const SR_INTERVALS = [1, 3, 7, 14, 30, 60];
-const STORAGE_KEY = 'ciiready_v6_progress';
-const SEEN_KEY = 'ciiready_v6_seen';
 const THEME_KEY = 'ciiready_theme';
-const STREAK_KEY = 'ciiready_streak';
 const REPORTS_KEY = 'ciiready_reports';
 const DAY_MS = 86400000;
+const API_BASE = '';
 
 const MODULES = [
   {num:1, name:"UK Financial Services Industry"},
@@ -307,7 +305,7 @@ const MODULES = [
 const MOCK_EXAM_TIME = 60 * 60; // 60 minutes in seconds
 const MOCK_PASS_MARK = 65;
 const LOGO_URL = 'data:image/png;base64,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';
-const MOCK_RESULTS_KEY = 'ciiready_mock_results';
+const MOCK_RESULTS_KEY = 'ciiready_mock_results_unused';
 
 function buildMockExam(examId) {
   // Deterministic selection based on examId for fixed exams
@@ -329,12 +327,8 @@ const MOCK_EXAMS = {
   B: { id: 'B', name: 'Mock Exam B', questions: buildMockExam('B') },
 };
 
-function loadMockResults() {
-  try { return JSON.parse(localStorage.getItem(MOCK_RESULTS_KEY) || '{}'); } catch { return {}; }
-}
-function saveMockResults(r) {
-  try { localStorage.setItem(MOCK_RESULTS_KEY, JSON.stringify(r)); } catch {}
-}
+function loadMockResults() { return {}; }
+function saveMockResults() {}
 
 // ─── THOUGHT LEADERS & RESOURCES ────────────────────────────────────────────
 const THOUGHT_LEADERS = [
@@ -355,17 +349,24 @@ const THOUGHT_LEADERS = [
 // ─── SPACED REPETITION ENGINE ────────────────────────────────────────────────
 const NEW_PER_DAY = 15; // Max new (unseen) questions introduced per session
 
-function loadProgress() {
-  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch { return {}; }
-}
-function saveProgress(p) {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); } catch {}
-}
-function loadSeen() {
-  try { return new Set(JSON.parse(localStorage.getItem(SEEN_KEY) || '[]')); } catch { return new Set(); }
-}
-function saveSeen(s) {
-  try { localStorage.setItem(SEEN_KEY, JSON.stringify([...s])); } catch {}
+// Supabase-backed save — debounced to avoid hammering the API on every answer
+let _saveTimer = null;
+function scheduleSave(token, progress, seen, streak, mockResults) {
+  if (!token) return;
+  clearTimeout(_saveTimer);
+  _saveTimer = setTimeout(() => {
+    fetch(`${API_BASE}/api/save-progress`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        token,
+        progress,
+        seen: [...seen],
+        streak,
+        mockResults,
+      }),
+    }).catch(() => {}); // silent fail — progress is held in React state regardless
+  }, 800);
 }
 function getState(id, progress) {
   return progress[id] || { level: 0, nextReview: 0 };
@@ -431,15 +432,8 @@ function shuffleOptions(q) {
     correctIdx: indices.indexOf(q.a),
   };
 }
-function loadStreak() {
-  try {
-    const s = JSON.parse(localStorage.getItem(STREAK_KEY) || '{}');
-    return { count: s.count || 0, lastDate: s.lastDate || null };
-  } catch { return { count: 0, lastDate: null }; }
-}
-function saveStreak(streak) {
-  try { localStorage.setItem(STREAK_KEY, JSON.stringify(streak)); } catch {}
-}
+function loadStreak() { return { count: 0, lastDate: null }; }
+function saveStreak() {}
 function todayStr() {
   return new Date().toISOString().slice(0, 10);
 }
@@ -447,18 +441,14 @@ function yesterdayStr() {
   const d = new Date(); d.setDate(d.getDate() - 1);
   return d.toISOString().slice(0, 10);
 }
-function updateStreak() {
-  const s = loadStreak();
+function updateStreak(currentStreak) {
+  const s = currentStreak || { count: 0, lastDate: null };
   const today = todayStr();
-  if (s.lastDate === today) return s; // already logged today
+  if (s.lastDate === today) return s;
   if (s.lastDate === yesterdayStr()) {
-    // consecutive day
-    const next = { count: s.count + 1, lastDate: today };
-    saveStreak(next); return next;
+    return { count: s.count + 1, lastDate: today };
   }
-  // streak broken — start fresh
-  const next = { count: 1, lastDate: today };
-  saveStreak(next); return next;
+  return { count: 1, lastDate: today };
 }
 
 // ─── QUESTION REPORTS ────────────────────────────────────────────────────────
@@ -715,6 +705,8 @@ const CSS = `
 .cr-option--correct .cr-option-letter { background: var(--success) !important; color: #fff !important; }
 .cr-option--wrong { border-color: var(--danger) !important; background: var(--danger-soft) !important; }
 .cr-option--wrong .cr-option-letter { background: var(--danger) !important; color: #fff !important; }
+.cr-option--pending { border-color: var(--accent) !important; background: var(--accent-soft) !important; }
+.cr-option--pending .cr-option-letter { background: var(--accent) !important; color: #fff !important; }
 
 /* EXPLANATION */
 .cr-explain { margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border); }
@@ -943,18 +935,21 @@ const CSS = `
 // ─── MAIN APP ────────────────────────────────────────────────────────────────
 export default function CIIReady() {
   const [view, setView] = useState('dashboard');
-  const [progress, setProgress] = useState(() => loadProgress());
-  const [seen, setSeen] = useState(() => loadSeen());
+  const [appReady, setAppReady] = useState(false); // false until Supabase load complete
+  const [progress, setProgress] = useState({});
+  const [seen, setSeen] = useState(new Set());
   const [sessionQ, setSessionQ] = useState([]);
   const [sessionIdx, setSessionIdx] = useState(0);
   const [chosen, setChosen] = useState(null);
+  const [pendingAnswer, setPendingAnswer] = useState(null); // two-click confirm
   const [sessionResults, setSessionResults] = useState([]);
   const [filterModule, setFilterModule] = useState(null);
+  const [difficultyFilter, setDifficultyFilter] = useState(null); // null | 1 | 2 | 3
   const [dark, setDark] = useState(() => {
     try { return localStorage.getItem(THEME_KEY) === 'dark'; } catch { return false; }
   });
-  const [streak, setStreak] = useState(() => loadStreak());
-  const [reportQ, setReportQ] = useState(null); // question being reported
+  const [streak, setStreak] = useState({ count: 0, lastDate: null });
+  const [reportQ, setReportQ] = useState(null);
   const [reportText, setReportText] = useState('');
   const [reportSent, setReportSent] = useState(false);
 
@@ -965,8 +960,26 @@ export default function CIIReady() {
   const [mockStartTime, setMockStartTime] = useState(null);
   const [mockSubmitted, setMockSubmitted] = useState(false);
   const [mockReviewIdx, setMockReviewIdx] = useState(null);
-  const [mockResults, setMockResults] = useState(() => loadMockResults());
+  const [mockResults, setMockResults] = useState({});
   const mockTimerRef = useRef(null);
+
+  // Token from localStorage (set by App.jsx)
+  const token = (() => { try { return localStorage.getItem('ciiready_token'); } catch { return null; } })();
+
+  // ── Load progress from Supabase on mount ──
+  useEffect(() => {
+    if (!token) { setAppReady(true); return; }
+    fetch(`${API_BASE}/api/load-progress?token=${encodeURIComponent(token)}`)
+      .then(r => r.json())
+      .then(data => {
+        if (data.progress) setProgress(data.progress);
+        if (data.seen) setSeen(new Set(data.seen));
+        if (data.streak) setStreak(data.streak);
+        if (data.mockResults) setMockResults(data.mockResults);
+      })
+      .catch(() => {}) // network fail — start with empty state
+      .finally(() => setAppReady(true));
+  }, [token]);
 
   // Computed values — separate reviews from new
   const reviews = getReviewsDue(progress, seen, null);
@@ -978,6 +991,19 @@ export default function CIIReady() {
   const overallPct = QUESTIONS.length > 0 ? Math.round(totalMastered / QUESTIONS.length * 100) : 0;
   const isFirstVisit = totalSeen === 0;
   const isCaughtUp = reviews.length === 0 && newAvailable.length === 0;
+
+  // Loading screen while fetching from Supabase
+  if (!appReady) {
+    return (
+      <div style={{
+        minHeight: '100vh', display: 'flex', alignItems: 'center',
+        justifyContent: 'center', fontFamily: "'Outfit', system-ui, sans-serif",
+        background: '#f7f8fa',
+      }}>
+        <div style={{ color: '#4a5e78', fontSize: 14 }}>Loading your progress…</div>
+      </div>
+    );
+  }
 
   // Timer effect for mock exams
   useEffect(() => {
@@ -1017,20 +1043,44 @@ export default function CIIReady() {
     }, 1500);
   }
 
-  function startSession(mod) {
-    const session = buildSession(progress, seen, mod || null);
+  function startSession(mod, diff) {
+    const activeDiff = diff !== undefined ? diff : difficultyFilter;
+    let session = buildSession(progress, seen, mod || null);
+    if (activeDiff) {
+      session = session.filter(q => q.d === activeDiff);
+      if (session.length === 0) {
+        // fallback: build new session with difficulty filter applied from source
+        const reviews = getReviewsDue(progress, seen, mod || null).filter(q => q.d === activeDiff);
+        const newPool = getNewAvailable(seen, mod || null).filter(q => q.d === activeDiff);
+        const newCapped = [...newPool].sort(() => Math.random() - 0.5).slice(0, NEW_PER_DAY);
+        session = [...reviews, ...newCapped].sort(() => Math.random() - 0.5).slice(0, 20);
+      }
+    }
     if (session.length === 0) return;
     setSessionQ(session);
     setSessionIdx(0);
     setChosen(null);
+    setPendingAnswer(null);
     setSessionResults([]);
     setFilterModule(mod || null);
     setView('session');
   }
 
-  function handleAnswer(idx) {
+  function handleSelectOption(idx) {
+    if (chosen !== null) return;
+    if (pendingAnswer === idx) {
+      // Second click on same option — confirm
+      confirmAnswer(idx);
+    } else {
+      // First click — highlight pending
+      setPendingAnswer(idx);
+    }
+  }
+
+  function confirmAnswer(idx) {
     if (chosen !== null) return;
     setChosen(idx);
+    setPendingAnswer(null);
     const q = sessionQ[sessionIdx];
     const sh = shuffleOptions(q);
     const correct = idx === sh.correctIdx;
@@ -1039,12 +1089,16 @@ export default function CIIReady() {
     newSeen.add(q.id);
     setProgress(newProgress);
     setSeen(newSeen);
-    saveProgress(newProgress);
-    saveSeen(newSeen);
     setSessionResults(r => [...r, { q, chosen: idx, correct, shuffledCorrect: sh.correctIdx }]);
-    // Update streak on first answer of the day
-    const s = updateStreak();
+    // Update streak
+    const s = updateStreak(streak);
     setStreak(s);
+    // Save everything to Supabase
+    scheduleSave(token, newProgress, newSeen, s, mockResults);
+  }
+
+  function handleAnswer(idx) {
+    handleSelectOption(idx);
   }
 
   function nextQuestion() {
@@ -1053,6 +1107,7 @@ export default function CIIReady() {
     } else {
       setSessionIdx(i => i + 1);
       setChosen(null);
+      setPendingAnswer(null);
     }
   }
 
@@ -1093,9 +1148,10 @@ export default function CIIReady() {
     if (!updated[mockId]) updated[mockId] = [];
     updated[mockId].push(result);
     setMockResults(updated);
-    saveMockResults(updated);
     setMockSubmitted(true);
     setView('mock-result');
+    // Save to Supabase
+    scheduleSave(token, progress, seen, streak, updated);
   }
 
   function formatTime(secs) {
@@ -1146,12 +1202,41 @@ export default function CIIReady() {
               <div style={{ marginBottom: 28 }}>
                 <h1 className="cr-hero-title" style={{ marginBottom: 8 }}>
                   Pass R01 with <em>spaced repetition</em>
-                </h1>
+                </h1>  
+                <div style={{ marginTop: 12 }}>
+  <svg width="48" height="48" viewBox="0 0 16 16" style={{ imageRendering: 'pixelated' }}>
+    <rect x="7" y="0" width="2" height="2" fill="#2d5a1b"/>
+    <rect x="5" y="2" width="6" height="2" fill="#3a7a24"/>
+    <rect x="3" y="4" width="4" height="2" fill="#3a7a24"/>
+    <rect x="9" y="4" width="4" height="2" fill="#3a7a24"/>
+    <rect x="2" y="6" width="3" height="2" fill="#4a9a2e"/>
+    <rect x="7" y="6" width="2" height="2" fill="#4a9a2e"/>
+    <rect x="11" y="6" width="3" height="2" fill="#4a9a2e"/>
+    <rect x="3" y="8" width="10" height="2" fill="#4a9a2e"/>
+    <rect x="5" y="10" width="6" height="2" fill="#3a7a24"/>
+    <rect x="7" y="12" width="2" height="2" fill="#2d5a1b"/>
+    <rect x="7" y="14" width="2" height="2" fill="#2d5a1b"/>
+  </svg>
+</div>
                 <div style={{ fontSize: 15, color: 'var(--text-secondary)', lineHeight: 1.7, maxWidth: 600 }}>
                   The same evidence-based method used by medical students and pilots. Instead of cramming, you review questions at optimised intervals — just as you're about to forget. Stronger recall, less study time.
                 </div>
               </div>
-
+<div style={{ textAlign: 'center', marginBottom: 16 }}>
+  <svg width="48" height="48" viewBox="0 0 16 16" style={{ imageRendering: 'pixelated' }}>
+    <rect x="7" y="0" width="2" height="2" fill="#2d5a1b"/>
+    <rect x="5" y="2" width="6" height="2" fill="#3a7a24"/>
+    <rect x="3" y="4" width="4" height="2" fill="#3a7a24"/>
+    <rect x="9" y="4" width="4" height="2" fill="#3a7a24"/>
+    <rect x="2" y="6" width="3" height="2" fill="#4a9a2e"/>
+    <rect x="7" y="6" width="2" height="2" fill="#4a9a2e"/>
+    <rect x="11" y="6" width="3" height="2" fill="#4a9a2e"/>
+    <rect x="3" y="8" width="10" height="2" fill="#4a9a2e"/>
+    <rect x="5" y="10" width="6" height="2" fill="#3a7a24"/>
+    <rect x="7" y="12" width="2" height="2" fill="#2d5a1b"/>
+    <rect x="7" y="14" width="2" height="2" fill="#2d5a1b"/>
+  </svg>
+</div>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 10, marginBottom: 28 }}>
                 {[
                   { n: '01', t: 'Answer', d: 'Work through R01 questions at your own pace' },
@@ -1248,22 +1333,47 @@ export default function CIIReady() {
 
               {/* Session start card */}
               {todayTotal > 0 && (
-                <div className="cr-start">
-                  <div className="cr-start-text">
-                    <div className="cr-start-title">
-                      {reviews.length > 0 && newToday > 0
-                        ? `${reviews.length} review${reviews.length !== 1 ? 's' : ''} + ${newToday} new`
-                        : reviews.length > 0
-                          ? `${reviews.length} review${reviews.length !== 1 ? 's' : ''} due`
-                          : `${newToday} new question${newToday !== 1 ? 's' : ''}`
-                      }
-                    </div>
-                    <div className="cr-start-sub">~{Math.max(5, Math.ceil(Math.min(todayTotal, 20) * 1.2))} min · {reviews.length > 0 ? 'reviews first, then new material' : 'fresh questions from across the syllabus'}</div>
+                <>
+                  {/* Difficulty filter */}
+                  <div style={{ display: 'flex', gap: 8, marginBottom: 12, flexWrap: 'wrap' }}>
+                    {[
+                      { label: 'All', value: null },
+                      { label: 'Easy', value: 1 },
+                      { label: 'Medium', value: 2 },
+                      { label: 'Hard', value: 3 },
+                    ].map(d => (
+                      <button
+                        key={String(d.value)}
+                        onClick={() => setDifficultyFilter(d.value)}
+                        style={{
+                          padding: '5px 14px', borderRadius: 20, border: '1px solid',
+                          fontFamily: 'var(--font)', fontSize: 13, fontWeight: 500,
+                          cursor: 'pointer', transition: 'all var(--transition)',
+                          borderColor: difficultyFilter === d.value ? 'var(--accent)' : 'var(--border)',
+                          background: difficultyFilter === d.value ? 'var(--accent)' : 'var(--bg-card)',
+                          color: difficultyFilter === d.value ? '#fff' : 'var(--text-secondary)',
+                        }}
+                      >{d.label}</button>
+                    ))}
                   </div>
-                  <button className="cr-start-btn" onClick={() => startSession(null)}>
-                    Start session
-                  </button>
-                </div>
+                  <div className="cr-start">
+                    <div className="cr-start-text">
+                      <div className="cr-start-title">
+                        {reviews.length > 0 && newToday > 0
+                          ? `${reviews.length} review${reviews.length !== 1 ? 's' : ''} + ${newToday} new`
+                          : reviews.length > 0
+                            ? `${reviews.length} review${reviews.length !== 1 ? 's' : ''} due`
+                            : `${newToday} new question${newToday !== 1 ? 's' : ''}`
+                        }
+                        {difficultyFilter && <span style={{ opacity: 0.7, fontWeight: 400, fontSize: 14 }}> · {['','Easy','Medium','Hard'][difficultyFilter]} only</span>}
+                      </div>
+                      <div className="cr-start-sub">~{Math.max(5, Math.ceil(Math.min(todayTotal, 20) * 1.2))} min · {reviews.length > 0 ? 'reviews first, then new material' : 'fresh questions from across the syllabus'}</div>
+                    </div>
+                    <button className="cr-start-btn" onClick={() => startSession(null)}>
+                      Start session
+                    </button>
+                  </div>
+                </>
               )}
 
               {/* Caught up — nudge toward mock exams */}
@@ -1405,11 +1515,20 @@ export default function CIIReady() {
                 if (chosen !== null) {
                   if (i === shuffled.correctIdx) cls += ' cr-option--correct';
                   else if (i === chosen && chosen !== shuffled.correctIdx) cls += ' cr-option--wrong';
+                } else if (pendingAnswer === i) {
+                  cls += ' cr-option--pending';
                 }
                 return (
                   <button key={i} className={cls} onClick={() => handleAnswer(i)} disabled={chosen !== null}>
                     <span className="cr-option-letter">{['A','B','C','D'][i]}</span>
                     <span className="cr-option-text">{opt}</span>
+                    {chosen === null && pendingAnswer === i && (
+                      <span style={{
+                        marginLeft: 'auto', fontSize: 11, fontWeight: 600,
+                        color: 'var(--accent)', fontFamily: 'var(--mono)',
+                        whiteSpace: 'nowrap', paddingLeft: 8,
+                      }}>tap again to confirm</span>
+                    )}
                   </button>
                 );
               })}
