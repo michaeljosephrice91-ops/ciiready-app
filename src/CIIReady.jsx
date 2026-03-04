@@ -992,19 +992,6 @@ export default function CIIReady() {
   const isFirstVisit = totalSeen === 0;
   const isCaughtUp = reviews.length === 0 && newAvailable.length === 0;
 
-  // Loading screen while fetching from Supabase
-  if (!appReady) {
-    return (
-      <div style={{
-        minHeight: '100vh', display: 'flex', alignItems: 'center',
-        justifyContent: 'center', fontFamily: "'Outfit', system-ui, sans-serif",
-        background: '#f7f8fa',
-      }}>
-        <div style={{ color: '#4a5e78', fontSize: 14 }}>Loading your progress…</div>
-      </div>
-    );
-  }
-
   // Timer effect for mock exams
   useEffect(() => {
     if (view === 'mock-session' && !mockSubmitted && mockTimeLeft > 0) {
@@ -1172,6 +1159,19 @@ export default function CIIReady() {
   return (
     <div className="cr-app" data-theme={dark ? 'dark' : 'light'}>
       <style>{CSS}</style>
+
+      {/* Loading screen */}
+      {!appReady && (
+        <div style={{
+          minHeight: '100vh', display: 'flex', alignItems: 'center',
+          justifyContent: 'center', fontFamily: "'Outfit', system-ui, sans-serif",
+          background: '#f7f8fa',
+        }}>
+          <div style={{ color: '#4a5e78', fontSize: 14 }}>Loading your progress…</div>
+        </div>
+      )}
+
+      {appReady && (<>
 
       {/* NAV */}
       <nav className="cr-nav">
@@ -1832,5 +1832,6 @@ export default function CIIReady() {
         </div>
       )}
     </div>
+    </>)}
   );
 }
